@@ -8,7 +8,7 @@ import (
 
 const SILVER int = 50
 const GOLD int = 100
-const DISCOUNT float64 = 0.1
+const DISCOUNT float64 = 0.1 // 10% is 0.1 .
 
 var rechargeObject *balanceinfo.RechargeTokens
 
@@ -38,6 +38,8 @@ func ComputeAmount(pack string, months int) (subAmount, discount, finalAmount in
 		if months >= 3 {
 			discount = int(Discount(months, GOLD))
 			finalAmount = subAmount - discount
+		} else {
+			finalAmount = subAmount // As no discount is applied it will be similar to pack amount
 		}
 	} else { // Handling for SILVER pack.
 
@@ -47,15 +49,21 @@ func ComputeAmount(pack string, months int) (subAmount, discount, finalAmount in
 		if months >= 3 {
 			discount = int(Discount(months, SILVER))
 			finalAmount = subAmount - discount
+		} else {
+			finalAmount = subAmount // As no discount is applied it will be similar to pack amount
 		}
 	}
 
 	if remainingBalance < subAmount {
 		return 0, 0, 0, remainingBalance, monthlyPrice, packType, false, nil
 	}
+
+	fmt.Println("SubAmount : ", subAmount)
+	deductbalance := finalAmount * -1
+	rechargeObject.DoRecharge(deductbalance)
 	remainingBalance -= finalAmount
 	fmt.Println("Compute", subAmount, discount, finalAmount, "RemainingBalance: ", remainingBalance)
-	AlreadySubscribedChannel(packType) // Saving packType
+	SubscribedChannel(packType) // Saving packType
 	return subAmount, discount, finalAmount, remainingBalance, monthlyPrice, packType, true, nil
 }
 func Discount(months int, pack int) float64 {

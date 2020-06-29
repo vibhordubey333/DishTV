@@ -4,31 +4,35 @@ import (
 	_ "fmt"
 )
 
-/*
-var subscribedObj *ExistingMembers
-
-type ExistingMembers struct {
-	subscribed []string
-	flag       int
-}
-
-func New() []string {
-	subSlice := make([]string, 0)
-	return subSlice
-}
-func init() {
-	subscribedObj := New()
-}
-*/
-type AlreadySubscribed interface {
-	AlreadySubscribedChannel() string
+type Subscribed interface {
+	SubscribedChannel(string)
+	SubscribedServices(string)
 }
 
 var existing []string
+var existingService []string
 
-func AlreadySubscribedChannel(str string) {
+func SubscribedChannel(str string) { // To avoid the redundent entry placing a check.
+
+	for _, v := range existing {
+		if v == str {
+			return
+		}
+	}
 	existing = append(existing, str)
+}
+func SubscribedServices(str string) { // To avoid the redundent entry placing a check.
+
+	for _, v := range existing {
+		if v == str {
+			return
+		}
+	}
+	existingService = append(existing, str)
 }
 func GetSubscribeList() []string {
 	return existing
+}
+func GetSubscribeServiceList() []string {
+	return existingService
 }

@@ -3,8 +3,10 @@ package menuservice
 import (
 	balanceinfo "DishTV/recharge"
 	compute "DishTV/subscriptioncompute"
+	"bufio"
 	"errors"
 	"fmt"
+	"os"
 )
 
 type services interface {
@@ -17,6 +19,8 @@ func ServiceMenu() {
 
 	var rechObj *balanceinfo.RechargeTokens
 	rechObj = balanceinfo.New()
+
+	reader := bufio.NewReader(os.Stdin)
 
 	var userChoice int
 	for {
@@ -96,7 +100,7 @@ func ServiceMenu() {
 			fmt.Scanf("%s", &indiChannels)
 			fmt.Println("Channels String :", indiChannels)
 			//(valid string, status bool, err error)
-			status, err := compute.SubscribeIndividualService(indiChannels)
+			status, err := compute.SubscribeChannel(indiChannels)
 			if err != nil {
 				fmt.Println("Invalid channel names. Try again.")
 				break
@@ -109,13 +113,43 @@ func ServiceMenu() {
 				"Account balance: ", rechObj.CheckBalance(), "Rs.")
 			fmt.Println("============================================================")
 		case 6:
+			//SubscribeService
+			var indiServices string
+			fmt.Println("Subscribe to special services")
+			fmt.Print("Enter the service name: ")
+			fmt.Scanf("%s", &indiServices)
+			fmt.Printf("Services are :%s", indiServices)
+			success, err := compute.SubscribeService(indiServices)
+			if err != nil {
+				fmt.Println("", success)
+			}
+			if success != true {
+				fmt.Println("Insufficient balance.")
+			}
+			fmt.Println("Account balance: ", rechObj.CheckBalance())
+			fmt.Println("Email notification sent successfully\n",
+				"SMS notification sent successfully")
 			fmt.Println("============================================================")
 		case 7:
+			fmt.Println("View current subscription details",
+				"\nCurrently subscribed packs and channels:", compute.GetSubscribeList(), "\n", compute.GetSubscribeServiceList())
+			break
 			fmt.Println("============================================================")
 		case 8:
+
+			fmt.Println("Update email and phone number for notifications\n")
+			fmt.Print("\nEnter the email: ")
+			email, _ := reader.ReadString('\n')
+			fmt.Print(email)
+			fmt.Print("\nEnter the phone: ")
+			phone, _ := reader.ReadString('\n')
+			fmt.Print(phone)
+
 			fmt.Println("============================================================")
 		case 9:
-			fmt.Println("============================================================")
+			fmt.Println("Thank you.")
+			os.Exit(0)
+
 		default:
 			fmt.Println("Invalid Choice.Try again.")
 		}
