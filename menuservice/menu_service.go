@@ -90,6 +90,23 @@ func ServiceMenu() {
 			fmt.Println("============================================================")
 			break
 		case 5:
+			fmt.Println("Add channels to existing subscription:",
+				"\nEnter channel names to add (separated by commas)")
+			var indiChannels string
+			fmt.Scanf("%s", &indiChannels)
+			fmt.Println("Channels String :", indiChannels)
+			//(valid string, status bool, err error)
+			status, err := compute.SubscribeIndividualService(indiChannels)
+			if err != nil {
+				fmt.Println("Invalid channel names. Try again.")
+				break
+			}
+			if status != true {
+				fmt.Println("Insufficient funds.")
+				break
+			}
+			fmt.Println("Channels added successfully.\n",
+				"Account balance: ", rechObj.CheckBalance(), "Rs.")
 			fmt.Println("============================================================")
 		case 6:
 			fmt.Println("============================================================")

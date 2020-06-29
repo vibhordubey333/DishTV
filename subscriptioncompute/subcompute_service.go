@@ -55,7 +55,7 @@ func ComputeAmount(pack string, months int) (subAmount, discount, finalAmount in
 	}
 	remainingBalance -= finalAmount
 	fmt.Println("Compute", subAmount, discount, finalAmount, "RemainingBalance: ", remainingBalance)
-
+	AlreadySubscribedChannel(packType) // Saving packType
 	return subAmount, discount, finalAmount, remainingBalance, monthlyPrice, packType, true, nil
 }
 func Discount(months int, pack int) float64 {
