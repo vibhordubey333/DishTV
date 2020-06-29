@@ -19,16 +19,17 @@ func SubscribedChannel(str string) { // To avoid the redundent entry placing a c
 			return
 		}
 	}
+
 	existing = append(existing, str)
 }
 func SubscribedServices(str string) { // To avoid the redundent entry placing a check.
 
-	for _, v := range existing {
+	for _, v := range existingService {
 		if v == str {
 			return
 		}
 	}
-	existingService = append(existing, str)
+	existingService = append(existingService, str)
 }
 func GetSubscribeList() []string {
 	return existing
