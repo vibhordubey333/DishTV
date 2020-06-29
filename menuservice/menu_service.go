@@ -68,15 +68,25 @@ func ServiceMenu() {
 			if err != nil {
 				fmt.Println("Invalid input. Please try again. ")
 			}
-			fmt.Print("Enter the months:")
+			fmt.Print("No. of months:")
 			fmt.Scanf("%d", &months)
 			// subscription amount , discount , finalprice,error
-			amountToPay, discount, finalPrice, err := compute.ComputeAmount(userInput, months)
+			amountToPay, discount, finalPrice, remainingBal, monthlyPrice, packType, status, err := compute.ComputeAmount(userInput, months)
 			if err != nil {
-				fmt.Errorf("Invalid Input. Please try again.")
+				fmt.Println("Invalid Input. Please try again.")
+				break
 			}
-			fmt.Println(amountToPay, discount, finalPrice)
-
+			if status != true {
+				fmt.Println("Insufficient balance . Kindly recharge then try again.")
+				break
+			}
+			fmt.Println(amountToPay, discount, finalPrice, status)
+			fmt.Println("\nYou have successfully subscribed the following packs -", packType+
+				"\nMonthly Price: ", monthlyPrice,
+				"\nSubscription Amount: ", amountToPay,
+				"\nDiscount Applied: ", discount,
+				"\nFinal Price after discount:", finalPrice,
+				"\nAccount balance: ", remainingBal)
 			fmt.Println("============================================================")
 			break
 		case 5:
