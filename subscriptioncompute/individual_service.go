@@ -8,10 +8,12 @@ import (
 )
 
 type IndividualService interface {
-	SubscribeChannel()
+	SubscribeChannel(string) (bool, error)
+	SubscribeService(string) (bool, error)
+	PanicHandler()
 }
 
-func panicHandler() {
+func PanicHandler() {
 	if r := recover(); r != nil {
 		fmt.Println("Recovered ", r)
 	}
@@ -19,7 +21,7 @@ func panicHandler() {
 
 func SubscribeChannel(channels string) (status bool, err error) {
 	//To save program from crashing.
-	defer panicHandler()
+	defer PanicHandler()
 
 	rechargeObject = balanceinfo.New()
 	userBalance := rechargeObject.CheckBalance()    // Save existing balance and compare it with final billing price .
@@ -59,7 +61,7 @@ func SubscribeChannel(channels string) (status bool, err error) {
 func SubscribeService(services string) (status bool, err error) {
 	//Handling , expecting user to subscribe for multiple services.
 	//To save program from crashing.
-	defer panicHandler()
+	defer PanicHandler()
 
 	rechargeObject = balanceinfo.New()
 	userBalance := rechargeObject.CheckBalance() // Save existing balance and compare it with final billing price .

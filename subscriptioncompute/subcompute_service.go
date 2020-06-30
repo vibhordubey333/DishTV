@@ -14,7 +14,7 @@ const (
 
 var rechargeObject *balanceinfo.RechargeTokens
 
-type subscription interface {
+type Subscription interface {
 	ComputeAmount(int) int
 	Discount(int, int) int
 }

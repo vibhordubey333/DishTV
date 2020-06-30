@@ -145,7 +145,7 @@ func ServiceMenu() {
 
 		case 8:
 
-			fmt.Println("Update email and phone number for notifications\n")
+			fmt.Println("Update email and phone number for notifications")
 			fmt.Print("\nEnter the email: ")
 			email, _ := reader.ReadString('\n')
 			fmt.Print(email)

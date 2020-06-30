@@ -1,9 +1,5 @@
 package subscriptioncompute
 
-import (
-	_ "fmt"
-)
-
 type Subscribed interface {
 	SubscribedChannel(string)
 	SubscribedServices(string)
