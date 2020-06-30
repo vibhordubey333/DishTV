@@ -159,6 +159,7 @@ func ServiceMenu() {
 		}
 	}
 }
+
 func case3Options() (optionString string) {
 	optionString = "\nView available packs, channels and services\n" +
 		"Available packs for subscription\n" +
