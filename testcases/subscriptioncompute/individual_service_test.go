@@ -2,6 +2,7 @@ package subscriptioncompute
 
 import (
 	compute "DishTV/subscriptioncompute"
+
 	mocks "DishTV/testcases/subscriptioncompute/mocks"
 	"errors"
 	"testing"
@@ -67,9 +68,11 @@ func TestSubscribeChannel(t *testing.T) {
 }
 
 func TestSubscribeService(t *testing.T) {
-	
-	obj := 
-	
+
+	obj := new(mocks.IndividualService)
+
+	obj.On("SubscribeService", mock.AnythingOfType("LearnEnglish")).Return(true, nil)
+	obj.On("SubscribeService", mock.AnythingOfType("LearnEnglish")).Return(true, errors.New("Invalid Input."))
 	type args struct {
 		services string
 	}
@@ -79,7 +82,18 @@ func TestSubscribeService(t *testing.T) {
 		wantStatus bool
 		wantErr    bool
 	}{
-		// TODO: Add test cases.
+		{
+			"Positive",
+			args{"LearnEnglish"},
+			false,
+			false,
+		},
+		{
+			"Negative",
+			args{""},
+			false,
+			true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

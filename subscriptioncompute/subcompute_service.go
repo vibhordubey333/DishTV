@@ -3,7 +3,6 @@ package subscriptioncompute
 import (
 	balanceinfo "DishTV/recharge"
 	"errors"
-	"fmt"
 )
 
 const (
@@ -23,7 +22,6 @@ type Subscription interface {
 func ComputeAmount(pack string, months int) (subAmount, discount, finalAmount int, remainingBalance, monthlyPrice int, packType string, status bool, err error) {
 
 	rechargeObject = balanceinfo.New()
-	fmt.Println("Recharge from compute : ", rechargeObject.CheckBalance())
 	remainingBalance = rechargeObject.CheckBalance()
 
 	if months <= 0 {

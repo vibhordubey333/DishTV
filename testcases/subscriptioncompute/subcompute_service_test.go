@@ -2,10 +2,16 @@ package subscriptioncompute
 
 import (
 	compute "DishTV/subscriptioncompute"
+	"DishTV/testcases/subscriptioncompute/mocks"
 	"testing"
+
+	"github.com/stretchr/testify/mock"
 )
 
 func TestComputeAmount(t *testing.T) {
+
+	obj := new(mocks.Subscription)
+	obj.On("ComputeAmount", mock.AnythingOfType("G"), mock.AnythingOfType("1")).Return(100, 0, 100, 0, 100, "GOLD", true, nil)
 	type args struct {
 		pack   string
 		months int
@@ -22,7 +28,18 @@ func TestComputeAmount(t *testing.T) {
 		wantStatus           bool
 		wantErr              bool
 	}{
-		// TODO: Add test cases.
+		{
+			"TestCase",
+			args{"G", 1},
+			100,
+			0,
+			100,
+			0,
+			100,
+			"GOLD",
+			true,
+			false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
