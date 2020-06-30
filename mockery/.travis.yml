@@ -1,0 +1,35 @@
+language: go
+
+os: 
+  - linux
+  - osx
+
+env:
+  - GO111MODULE=on CGO_ENABLED=0
+
+go:
+  - 1.11.x
+  - 1.12.x
+  - 1.13.x
+  - 1.14.x
+  - tip
+
+git:
+    depth: 1
+
+script: 
+  - go test -v -cover ./...
+
+services:
+  - docker
+
+after_success:
+  - test -n "$TRAVIS_TAG" && docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+
+deploy:
+  - provider: script
+    script: curl -sL https://git.io/goreleaser | bash
+    on:
+        tags: true
+        condition: $TRAVIS_OS_NAME = linux
+        go: 1.14.x

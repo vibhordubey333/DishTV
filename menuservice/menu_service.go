@@ -9,14 +9,17 @@ import (
 	"os"
 )
 
-type services interface {
+type Services interface {
 	ServiceMenu()
+	SanitizeInput()
 }
 
 const (
 	LINEPATTERN  string = "============================================================"
 	INVALIDINPUT string = "Invalid Input. Please try again."
 	INVALIDBAL   string = "Insufficient balance."
+	EMAIL        string = "Email notification sent successfully"
+	SMS          string = "SMS notification sent successfully"
 )
 
 func ServiceMenu() {
@@ -42,23 +45,21 @@ func ServiceMenu() {
 		switch userChoice {
 
 		case 1: // Case for checking balance.
-			//rechObj := checkbal.New()
 			rechObj = balanceinfo.New()
 			fmt.Println("Current balance is : ", rechObj.CheckBalance())
 			fmt.Println(LINEPATTERN)
 			break
 
 		case 2: // Case for recharging
-			fmt.Println("Case 2", rechObj)
 			var rechargeAmount int
+			fmt.Print("Enter the amount to recharge: ")
 			fmt.Scanf("%d", &rechargeAmount)
-			//rechargeAmount = 100
 			fmt.Println(rechObj.DoRecharge(rechargeAmount))
 			fmt.Println(LINEPATTERN)
 			break
 
 		case 3:
-			fmt.Println(case3Options())
+			fmt.Println(case3Options()) // Display messages.1
 			fmt.Println(LINEPATTERN)
 			break
 
@@ -69,7 +70,7 @@ func ServiceMenu() {
 			fmt.Print("Enter the Pack you wish to subscribe: (Silver: 'S', Gold: 'G'):")
 			fmt.Scanf("%s", &userInput)
 			fmt.Println("UserInput:", userInput)
-			userInput, err := sanitizeInput(userInput) // Checking if valid input is given.
+			userInput, err := SanitizeInput(userInput) // Checking if valid input is given.
 			if err != nil {
 				fmt.Println(INVALIDINPUT)
 			}
@@ -93,6 +94,9 @@ func ServiceMenu() {
 				"\nFinal Price after discount:", finalPrice,
 				"\nAccount balance: ", remainingBal)
 
+			fmt.Println(EMAIL)
+			fmt.Println(SMS)
+
 			fmt.Println(LINEPATTERN)
 			break
 
@@ -110,8 +114,8 @@ func ServiceMenu() {
 				fmt.Println(INVALIDBAL)
 				break
 			}
-			fmt.Println("Channels added successfully.\n",
-				"Account balance: ", rechObj.CheckBalance(), "Rs.")
+			fmt.Println("Channels added successfully.")
+			fmt.Println("Account balance: ", rechObj.CheckBalance(), "Rs.")
 			fmt.Println(LINEPATTERN)
 
 		case 6:
@@ -126,11 +130,11 @@ func ServiceMenu() {
 				fmt.Println("", success)
 			}
 			if success != true {
-				fmt.Println("Insufficient balance.")
+				fmt.Println(INVALIDBAL)
 			}
 			fmt.Println("Account balance: ", rechObj.CheckBalance())
-			fmt.Println("Email notification sent successfully")
-			fmt.Println("SMS notification sent successfully")
+			fmt.Println(EMAIL)
+			fmt.Println(SMS)
 			fmt.Println(LINEPATTERN)
 
 		case 7:
@@ -141,7 +145,7 @@ func ServiceMenu() {
 
 		case 8:
 
-			fmt.Println("Update email and phone number for notifications\n")
+			fmt.Println("Update email and phone number for notifications")
 			fmt.Print("\nEnter the email: ")
 			email, _ := reader.ReadString('\n')
 			fmt.Print(email)
@@ -168,7 +172,7 @@ func case3Options() (optionString string) {
 		"Available channels for subscription\n" +
 		"Zee: 10 Rs.\n" +
 		"Sony: 15 Rs.\n" +
-		"Star Plus: 20 Rs.\n" +
+		"StarPlus: 20 Rs.\n" +
 		"Discovery: 10 Rs.\n" +
 		"NatGeo: 20 Rs.\n" +
 		"Available services for subscription\n" +
@@ -177,7 +181,7 @@ func case3Options() (optionString string) {
 	return
 }
 
-func sanitizeInput(userInput string) (string, error) {
+func SanitizeInput(userInput string) (string, error) {
 	if userInput == "S" || userInput == "G" {
 		return userInput, nil
 	} else {
