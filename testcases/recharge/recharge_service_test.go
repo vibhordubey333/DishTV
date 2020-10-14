@@ -1,15 +1,24 @@
 package recharge
 
 import (
+	//	recharge "DishTV/recharge"
+	"DishTV/recharge"
+
+	//"DishTV/testcases/recharge/mocks"
+
 	"reflect"
 	"testing"
 )
 
 func TestRechargeTokens_New(t *testing.T) {
+
+	//obj1 := new(mocks.Recharge)
+
+	//obj1 = obj1.New
 	tests := []struct {
 		name    string
-		rechObj *RechargeTokens
-		want    *RechargeTokens
+		rechObj *recharge.RechargeTokens
+		want    *recharge.RechargeTokens
 	}{
 		// TODO: Add test cases.
 	}
@@ -25,7 +34,7 @@ func TestRechargeTokens_New(t *testing.T) {
 func TestRechargeTokens_CheckBalance(t *testing.T) {
 	tests := []struct {
 		name    string
-		rechObj *RechargeTokens
+		rechObj *recharge.RechargeTokens
 		want    int
 	}{
 		// TODO: Add test cases.
@@ -45,7 +54,7 @@ func TestRechargeTokens_DoRecharge(t *testing.T) {
 	}
 	tests := []struct {
 		name    string
-		rechObj *RechargeTokens
+		rechObj *recharge.RechargeTokens
 		args    args
 		want    string
 	}{
@@ -66,7 +75,7 @@ func TestRechargeTokens_InternalDoRecharge(t *testing.T) {
 	}
 	tests := []struct {
 		name    string
-		rechObj *RechargeTokens
+		rechObj *recharge.RechargeTokens
 		args    args
 		want    string
 	}{

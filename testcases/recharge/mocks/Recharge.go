@@ -3,7 +3,9 @@
 package mocks
 
 import (
-	recharge "DishTV/testcases/recharge"
+	//recharge "DishTV/testcases/recharge"
+
+	"DishTV/recharge"
 
 	mock "github.com/stretchr/testify/mock"
 )
