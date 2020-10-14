@@ -21,7 +21,10 @@ type Subscription interface {
 //Accepts pack type and months of subscription. And returns subscription amount , discount , finalprice,error
 func ComputeAmount(pack string, months int) (subAmount, discount, finalAmount int, remainingBalance, monthlyPrice int, packType string, status bool, err error) {
 
-	rechargeObject = balanceinfo.New()
+	rechargeObject := new(balanceinfo.RechargeTokens)
+
+	rechargeObject = rechargeObject.New()
+
 	remainingBalance = rechargeObject.CheckBalance()
 
 	if months <= 0 {

@@ -7,6 +7,7 @@ import (
 var rechargeObject *RechargeTokens
 
 type Recharge interface {
+	New() *RechargeTokens
 	CheckBalance() int
 	DoRecharge(int) string
 	InternalDoRecharge(int)
@@ -17,7 +18,7 @@ type RechargeTokens struct {
 	Flag    int
 }
 
-func New() *RechargeTokens {
+func (rechObj *RechargeTokens) New() *RechargeTokens {
 
 	if rechargeObject.Flag == 0 {
 		rechargeObject.Flag = 1      // Flag to ensure , remaining balance doesn't get overrided.
@@ -28,10 +29,11 @@ func New() *RechargeTokens {
 	}
 }
 
+//Do not mock it as it is called internaly by Go runtime.
 func init() {
 	rechargeObject = new(RechargeTokens) // Creating the object for first time so we don't get nil pointer
 	// execption when we're accessing flag variable in New() function.
-	_ = New() // Initializing 100Rs everytime program restarts.
+	_ = rechargeObject.New() // Initializing 100Rs everytime program restarts.
 }
 
 func (rechObj *RechargeTokens) CheckBalance() int {

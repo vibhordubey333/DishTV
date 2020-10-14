@@ -25,7 +25,10 @@ const (
 func ServiceMenu() {
 
 	var rechObj *balanceinfo.RechargeTokens
-	rechObj = balanceinfo.New()
+
+	rechargeObject := new(balanceinfo.RechargeTokens)
+
+	rechObj = rechargeObject.New()
 	reader := bufio.NewReader(os.Stdin)
 	var userChoice int
 
@@ -45,14 +48,15 @@ func ServiceMenu() {
 		switch userChoice {
 
 		case 1: // Case for checking balance.
-			rechObj = balanceinfo.New()
+			rechargeObject := new(balanceinfo.RechargeTokens)
+			rechObj = rechargeObject.New()
 			fmt.Println("Current balance is : ", rechObj.CheckBalance())
 			fmt.Println(LINEPATTERN)
 			break
 
 		case 2: // Case for recharging
 			var rechargeAmount int
-			fmt.Print("Enter the amount to recharge: ")
+			//fmt.Print("Enter the amount to recharge:")
 			fmt.Scanf("%d", &rechargeAmount)
 			fmt.Println(rechObj.DoRecharge(rechargeAmount))
 			fmt.Println(LINEPATTERN)

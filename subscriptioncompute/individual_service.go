@@ -22,8 +22,9 @@ func PanicHandler() {
 func SubscribeChannel(channels string) (status bool, err error) {
 	//To save program from crashing.
 	defer PanicHandler()
+	rechargeObject := new(balanceinfo.RechargeTokens)
 
-	rechargeObject = balanceinfo.New()
+	rechargeObject = rechargeObject.New()
 	userBalance := rechargeObject.CheckBalance()    // Save existing balance and compare it with final billing price .
 	subscribedChannlelAndPacks := make([]string, 0) //Save all the valid channel name user is subscribing . To display them later on.
 	var finalAmount int                             // Save total amount .
@@ -62,8 +63,9 @@ func SubscribeService(services string) (status bool, err error) {
 	//Handling , expecting user to subscribe for multiple services.
 	//To save program from crashing.
 	defer PanicHandler()
+	rechargeObject := new(balanceinfo.RechargeTokens)
 
-	rechargeObject = balanceinfo.New()
+	rechargeObject = rechargeObject.New()
 	userBalance := rechargeObject.CheckBalance() // Save existing balance and compare it with final billing price .
 	subscribedServices := make([]string, 0)      //Save all the valid service name user is subscribing . To display them later on.
 	var finalAmount int                          // Save total amount .
