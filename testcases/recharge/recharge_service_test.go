@@ -1,8 +1,10 @@
 package recharge
 
 import (
+	"github.com/stretchr/testify/mock"
 	//	recharge "DishTV/recharge"
 	"DishTV/recharge"
+	"DishTV/testcases/recharge/mocks"
 
 	//"DishTV/testcases/recharge/mocks"
 
@@ -12,7 +14,10 @@ import (
 
 func TestRechargeTokens_New(t *testing.T) {
 
-	//obj1 := new(mocks.Recharge)
+	obj1 := new(mocks.Recharge)
+	obj1.On("New", mock.AnythingOfType("")).Return(recharge.RechargeTokens{200, 1})
+	//rechargeTokObj := new(recharge.RechargeTokens)
+	//rechargeObject := rechargeTokObj.New
 
 	//obj1 = obj1.New
 	tests := []struct {
@@ -20,10 +25,16 @@ func TestRechargeTokens_New(t *testing.T) {
 		rechObj *recharge.RechargeTokens
 		want    *recharge.RechargeTokens
 	}{
-		// TODO: Add test cases.
+		{
+			"Negative testcase",
+			&recharge.RechargeTokens{200, -1},
+			&recharge.RechargeTokens{100, 1},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			//	if got := tt.rechObj.New(); !reflect.DeepEqual(got, tt.want) {
+			// if got := obj1.New(); !reflect.DeepEqual(got, tt.want) { Giving error.
 			if got := tt.rechObj.New(); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("RechargeTokens.New() = %v, want %v", got, tt.want)
 			}
